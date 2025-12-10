@@ -430,6 +430,123 @@ st.markdown("""
         color: #666;
         font-size: 0.875rem;
     }
+    
+    /* Deep Learning Hero Section */
+    .dl-hero-section {
+        background: linear-gradient(135deg, #1a3a3a 0%, #1a2a2a 100%);
+        padding: 5rem 2rem;
+        text-align: center;
+        margin-top: 80px;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .dl-hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 50% 50%, rgba(0, 217, 255, 0.1) 0%, transparent 70%);
+        pointer-events: none;
+    }
+    
+    .dl-badge {
+        background-color: rgba(42, 42, 42, 0.8);
+        border: 1px solid #333;
+        color: #a0a0a0;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+        font-size: 0.875rem;
+    }
+    
+    .dl-hero-title {
+        font-size: 3.5rem;
+        font-weight: 700;
+        color: #ffffff;
+        line-height: 1.2;
+        margin: 1rem auto 1.5rem auto;
+        max-width: 1000px;
+    }
+    
+    .dl-hero-description {
+        font-size: 1.125rem;
+        color: #a0a0a0;
+        line-height: 1.6;
+        max-width: 800px;
+        margin: 0 auto 2.5rem auto;
+    }
+    
+    .dl-button-group {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 3rem;
+    }
+    
+    .btn-cyan {
+        background-color: #00d9ff;
+        color: #1a1a1a;
+        padding: 0.875rem 2rem;
+        border-radius: 6px;
+        font-weight: 600;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+    }
+    
+    .btn-cyan:hover {
+        background-color: #00c4e6;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0, 217, 255, 0.3);
+    }
+    
+    .btn-secondary {
+        background-color: transparent;
+        color: #ffffff;
+        padding: 0.875rem 2rem;
+        border-radius: 6px;
+        font-weight: 600;
+        text-decoration: none;
+        border: 1px solid #444;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+    }
+    
+    .btn-secondary:hover {
+        border-color: #00d9ff;
+        color: #00d9ff;
+        transform: translateY(-2px);
+    }
+    
+    .dl-image-container {
+        max-width: 900px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .dl-laptop-mockup {
+        width: 100%;
+        border-radius: 12px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        border: 1px solid #333;
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -458,6 +575,32 @@ st.markdown("""
 
 # Main content
 st.markdown('<div class="main-content">', unsafe_allow_html=True)
+
+# Deep Learning Hero Section
+st.markdown("""
+    <div class="dl-hero-section">
+        <div class="dl-badge">
+            <span>✨</span>
+            <span>Deep Learning</span>
+        </div>
+        <h1 class="dl-hero-title">
+            Deteksi Penyakit Tanaman Melalui Daun dalam Sekejap dengan AI menggunakan LensFolia!
+        </h1>
+        <p class="dl-hero-description">
+            Gunakan teknologi kecerdasan buatan untuk menganalisis kondisi daun tanaman Anda—cepat, 
+            akurat, dan mudah digunakan oleh siapa saja.
+        </p>
+        <div class="dl-button-group">
+            <a href="#mulai" class="btn-cyan">Coba Sekarang</a>
+            <a href="#fitur" class="btn-secondary">Pelajari Lebih</a>
+        </div>
+        <div class="dl-image-container">
+            <img src="https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=900&h=500&fit=crop" 
+                 class="dl-laptop-mockup" 
+                 alt="Disease Detection Demo">
+        </div>
+    </div>
+""", unsafe_allow_html=True)
 
 # Hero section
 st.markdown("""
