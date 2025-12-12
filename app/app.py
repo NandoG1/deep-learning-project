@@ -466,14 +466,39 @@ st.markdown("""
     
     /* File uploader styling */
     [data-testid="stFileUploader"] {
-        background: #F7F5F3;
-        border: 2px dashed #E0DEDB;
-        border-radius: 8px;
-        padding: 2rem;
+        background: #F7F5F3 !important;
+        border: 2px dashed #E0DEDB !important;
+        border-radius: 8px !important;
+        padding: 2rem !important;
     }
     
     [data-testid="stFileUploader"]:hover {
-        border-color: #37322F;
+        border-color: #37322F !important;
+    }
+    
+    /* File uploader text color */
+    [data-testid="stFileUploader"] label,
+    [data-testid="stFileUploader"] p,
+    [data-testid="stFileUploader"] span,
+    [data-testid="stFileUploader"] div {
+        color: #605A57 !important;
+    }
+    
+    [data-testid="stFileUploader"] small {
+        color: #605A57 !important;
+    }
+    
+    /* File uploader button */
+    [data-testid="stFileUploader"] button {
+        background-color: #37322F !important;
+        color: #FFFFFF !important;
+        border: none !important;
+        border-radius: 8px !important;
+        padding: 0.5rem 1rem !important;
+    }
+    
+    [data-testid="stFileUploader"] button:hover {
+        background-color: #49423D !important;
     }
     
     /* Back button */
