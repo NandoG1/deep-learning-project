@@ -637,7 +637,7 @@ def render_feature_cards():
 def render_social_proof():
     st.markdown("<br>", unsafe_allow_html=True)
     
-    st.markdown('<div style="text-align: center;"><span class="section-badge">Supported Plant Classes</span></div>', unsafe_allow_html=True)
+    st.markdown('<div id="metrics" style="text-align: center;"><span class="section-badge">Supported Plant Classes</span></div>', unsafe_allow_html=True)
     st.markdown('<h2 class="section-title">Plant classes we can accurately detect</h2>', unsafe_allow_html=True)
     st.markdown('<p class="section-description">Our model is trained to recognize a wide variety of plant diseases and healthy conditions across multiple crop types.</p>', unsafe_allow_html=True)
     
@@ -673,7 +673,7 @@ def render_metrics():
     for i, metric in enumerate(metrics):
         with cols[i]:
             st.markdown(f"""
-            <div style="text-align: center; padding: 1.5rem;">
+            <div style="text-align: center; padding: 1.5rem;" id="faq">
                 <div class="metric-value">{metric['value']}</div>
                 <div class="metric-label">{metric['label']}</div>
             </div>
