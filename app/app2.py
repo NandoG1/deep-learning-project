@@ -14,7 +14,7 @@ st.set_page_config(
 if 'current_page' not in st.session_state:
     st.session_state.current_page = 'landing'
 
-API_URL = "http://localhost:5000/predict"
+API_URL = "https://nando123g-dl-back-end.hf.space/"
 
 def call_prediction_api(image_file):
     try:
