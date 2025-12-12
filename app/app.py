@@ -219,13 +219,40 @@ st.markdown("""
         line-height: 1.6;
     }
     
-    /* FAQ expander text color */
+    /* FAQ expander styling */
+    div[data-testid="stExpander"] {
+        background-color: transparent !important;
+        border: 1px solid #E0DEDB !important;
+        border-radius: 8px !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
     div[data-testid="stExpander"] summary {
+        background-color: white !important;
         color: #000000 !important;
+        font-weight: 500 !important;
+        padding: 1rem !important;
+    }
+    
+    div[data-testid="stExpander"] summary:hover {
+        background-color: #F7F5F3 !important;
+    }
+    
+    div[data-testid="stExpander"][open] {
+        background-color: white !important;
+    }
+    
+    div[data-testid="stExpander"] div[role="button"] {
+        background-color: transparent !important;
     }
     
     div[data-testid="stExpander"] p {
         color: #000000 !important;
+        background-color: transparent !important;
+    }
+    
+    div[data-testid="stExpander"] .faq-answer {
+        background-color: transparent !important;
     }
     
     /* Footer styling */
