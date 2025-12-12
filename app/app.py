@@ -14,7 +14,7 @@ st.set_page_config(
 if 'current_page' not in st.session_state:
     st.session_state.current_page = 'landing'
 
-API_URL = "https://nando123g-dl-back-end.hf.space/"
+API_URL = "https://nando123G-dl-back-end.hf.space/predict"
 
 def call_prediction_api(image_file):
     try:
@@ -24,7 +24,7 @@ def call_prediction_api(image_file):
         
         files = {'file': ('image.png', img_byte_arr, 'image/png')}
         
-        response = requests.post(API_URL, files=files, timeout=30)
+        response = requests.post(API_URL, files=files, timeout=300)
         
         if response.status_code == 200:
             return response.json()
