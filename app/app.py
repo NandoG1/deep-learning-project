@@ -52,7 +52,12 @@ st.markdown("""
     
     /* Main background */
     .stApp {
-        background-color: #F7F5F3;
+        background-color: #F7F5F3 !important;
+    }
+    
+    /* Force text color throughout (exclude buttons) */
+    .stApp p, .stApp div:not(.stButton):not(.stDownloadButton) span, .stApp h1, .stApp h2, .stApp h3, .stApp h4, .stApp h5, .stApp h6 {
+        color: #37322F !important;
     }
     
     /* Remove default padding from main container */
@@ -63,53 +68,53 @@ st.markdown("""
     
     /* Hero section styling */
     .hero-title {
-        font-family: 'Georgia', serif;
-        font-size: 3.5rem;
-        font-weight: 400;
+        font-family: 'Georgia', serif !important;
+        font-size: 3.5rem !important;
+        font-weight: 400 !important;
         color: #37322F !important;
-        text-align: center;
-        line-height: 1.2;
-        margin-bottom: 1rem;
+        text-align: center !important;
+        line-height: 1.2 !important;
+        margin-bottom: 1rem !important;
     }
     
     .hero-subtitle {
-        font-size: 1.1rem;
+        font-size: 1.1rem !important;
         color: rgba(55, 50, 47, 0.80) !important;
-        text-align: center;
-        max-width: 500px;
-        margin: 0 auto 2rem auto;
-        line-height: 1.6;
+        text-align: center !important;
+        max-width: 500px !important;
+        margin: 0 auto 2rem auto !important;
+        line-height: 1.6 !important;
     }
     
     /* Section headers */
     .section-badge {
-        display: inline-block;
-        padding: 6px 14px;
-        background: white;
-        border: 1px solid rgba(2, 6, 23, 0.08);
-        border-radius: 90px;
-        font-size: 0.75rem;
-        font-weight: 500;
-        color: #37322F;
-        margin-bottom: 1rem;
+        display: inline-block !important;
+        padding: 6px 14px !important;
+        background: white !important;
+        border: 1px solid rgba(2, 6, 23, 0.08) !important;
+        border-radius: 90px !important;
+        font-size: 0.75rem !important;
+        font-weight: 500 !important;
+        color: #37322F !important;
+        margin-bottom: 1rem !important;
     }
     
     .section-title {
-        font-size: 2.5rem;
-        font-weight: 600;
-        color: #49423D;
-        text-align: center;
-        margin-bottom: 0.5rem;
-        letter-spacing: -0.02em;
+        font-size: 2.5rem !important;
+        font-weight: 600 !important;
+        color: #49423D !important;
+        text-align: center !important;
+        margin-bottom: 0.5rem !important;
+        letter-spacing: -0.02em !important;
     }
     
     .section-description {
-        font-size: 1rem;
-        color: #605A57;
-        text-align: center;
-        line-height: 1.7;
-        max-width: 500px;
-        margin: 0 auto;
+        font-size: 1rem !important;
+        color: #605A57 !important;
+        text-align: center !important;
+        line-height: 1.7 !important;
+        max-width: 500px !important;
+        margin: 0 auto !important;
     }
     
     /* Feature cards */
@@ -122,16 +127,16 @@ st.markdown("""
     }
     
     .feature-card h3 {
-        font-size: 0.875rem;
-        font-weight: 600;
-        color: #49423D;
-        margin-bottom: 0.5rem;
+        font-size: 0.875rem !important;
+        font-weight: 600 !important;
+        color: #49423D !important;
+        margin-bottom: 0.5rem !important;
     }
     
     .feature-card p {
-        font-size: 0.875rem;
-        color: #605A57;
-        line-height: 1.5;
+        font-size: 0.875rem !important;
+        color: #605A57 !important;
+        line-height: 1.5 !important;
     }
     
     /* Pricing cards */
@@ -253,7 +258,7 @@ st.markdown("""
     /* Button styling */
     .stButton > button {
         background-color: #37322F !important;
-        color: white !important;
+        color: #FFFFFF !important;
         border: none !important;
         border-radius: 50px !important;
         padding: 0.75rem 3rem !important;
@@ -262,36 +267,61 @@ st.markdown("""
     
     .stButton > button:hover {
         background-color: #49423D !important;
+        color: #FFFFFF !important;
+    }
+    
+    .stButton > button:active,
+    .stButton > button:focus {
+        color: #FFFFFF !important;
+    }
+    
+    /* Force button text to be white */
+    .stButton button p,
+    .stButton button span,
+    .stButton button div {
+        color: #FFFFFF !important;
+    }
+    
+    /* Download button styling */
+    .stDownloadButton > button {
+        color: #FFFFFF !important;
+    }
+    
+    .stDownloadButton button p,
+    .stDownloadButton button span,
+    .stDownloadButton button div {
+        color: #FFFFFF !important;
     }
     
     /* Metric styling */
     .metric-value {
-        font-family: 'Georgia', serif;
-        font-size: 3rem;
-        font-weight: 500;
-        color: #37322F;
+        font-family: 'Georgia', serif !important;
+        font-size: 3rem !important;
+        font-weight: 500 !important;
+        color: #37322F !important;
     }
     
     .metric-label {
-        font-size: 0.875rem;
-        color: #605A57;
+        font-size: 0.875rem !important;
+        color: #605A57 !important;
     }
     
     /* Divider styling */
     hr {
-        border: none;
-        border-top: 1px solid rgba(55, 50, 47, 0.12);
-        margin: 2rem 0;
+        border: none !important;
+        border-top: 1px solid rgba(55, 50, 47, 0.12) !important;
+        margin: 2rem 0 !important;
+        opacity: 1 !important;
     }
     
     /* Logo cloud */
     .logo-placeholder {
-        background: rgba(55, 50, 47, 0.08);
-        border-radius: 4px;
-        padding: 1rem 2rem;
-        text-align: center;
-        color: #605A57;
-        font-weight: 500;
+        background: rgba(55, 50, 47, 0.08) !important;
+        border-radius: 4px !important;
+        padding: 1rem 2rem !important;
+        text-align: center !important;
+        color: #605A57 !important;
+        font-weight: 500 !important;
     }
     
     /* Upload page styling */
@@ -304,18 +334,18 @@ st.markdown("""
     }
     
     .upload-header {
-        font-size: 2rem;
-        font-weight: 600;
-        color: #49423D;
-        margin-bottom: 0.5rem;
-        letter-spacing: -0.02em;
+        font-size: 2rem !important;
+        font-weight: 600 !important;
+        color: #49423D !important;
+        margin-bottom: 0.5rem !important;
+        letter-spacing: -0.02em !important;
     }
     
     .upload-subheader {
-        font-size: 1rem;
-        color: #605A57;
-        margin-bottom: 2rem;
-        line-height: 1.6;
+        font-size: 1rem !important;
+        color: #605A57 !important;
+        margin-bottom: 2rem !important;
+        line-height: 1.6 !important;
     }
     
     .result-container {
@@ -327,21 +357,36 @@ st.markdown("""
     }
     
     .result-header {
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: #37322F;
-        margin-bottom: 1.5rem;
+        font-size: 1.5rem !important;
+        font-weight: 600 !important;
+        color: #37322F !important;
+        margin-bottom: 1.5rem !important;
     }
     
     .classification-box {
-        background: white;
-        border: 1px solid #E0DEDB;
-        border-radius: 8px;
-        padding: 1.5rem;
-        margin-bottom: 1.5rem;
+        background: white !important;
+        border: 1px solid #E0DEDB !important;
+        border-radius: 8px !important;
+        padding: 1.5rem !important;
+        margin-bottom: 1.5rem !important;
     }
     
     .classification-label {
+        font-size: 0.875rem !important;
+        color: rgba(55, 50, 47, 0.60) !important;
+        font-weight: 500 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    .classification-value {
+        font-family: 'Georgia', serif !important;
+        font-size: 2rem !important;
+        font-weight: 500 !important;
+        color: #37322F !important;
+        margin-bottom: 0.5rem !important;
+    }
         font-size: 0.875rem;
         color: rgba(55, 50, 47, 0.60);
         font-weight: 500;
@@ -380,16 +425,16 @@ st.markdown("""
     }
     
     .recommendation-title {
-        font-size: 1.125rem;
-        font-weight: 600;
-        color: #49423D;
-        margin-bottom: 1rem;
+        font-size: 1.125rem !important;
+        font-weight: 600 !important;
+        color: #49423D !important;
+        margin-bottom: 1rem !important;
     }
     
     .recommendation-text {
-        font-size: 0.9375rem;
-        color: #605A57;
-        line-height: 1.7;
+        font-size: 0.9375rem !important;
+        color: #605A57 !important;
+        line-height: 1.7 !important;
     }
     
     /* File uploader styling */
