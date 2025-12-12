@@ -1,19 +1,38 @@
 import streamlit as st
 from PIL import Image
+import requests
+import io
 
 # Page configuration
 st.set_page_config(
     page_title="Brillance - Effortless Custom Contract Billing",
-    page_icon="✨",
+    page_icon="",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
 
-# Initialize session state for navigation
 if 'current_page' not in st.session_state:
     st.session_state.current_page = 'landing'
 
-# Custom CSS for styling
+API_URL = "http://localhost:5000/predict"
+
+def call_prediction_api(image_file):
+    try:
+        img_byte_arr = io.BytesIO()
+        image_file.save(img_byte_arr, format='PNG')
+        img_byte_arr.seek(0)
+        
+        files = {'file': ('image.png', img_byte_arr, 'image/png')}
+        
+        response = requests.post(API_URL, files=files, timeout=30)
+        
+        if response.status_code == 200:
+            return response.json()
+        else:
+            return {"error": f"API returned status code {response.status_code}"}
+    except Exception as e:
+        return {"error": str(e)}
+
 st.markdown("""
 <style>
     /* Main theme colors */
@@ -400,13 +419,15 @@ st.markdown("""
     .back-button:hover {
         color: #37322F;
     }
+            
+    html {
+        scroll-behavior: smooth;
+    }
 </style>
 """, unsafe_allow_html=True)
 
 
-# ============== HEADER ==============
 def render_header():
-    # Custom CSS for login button alignment
     st.markdown("""
     <style>
     /* Header button alignment */
@@ -446,34 +467,33 @@ def render_header():
     with col2:
         st.markdown("""
         <div style='display: flex; justify-content: center; align-items: center; gap: 2.5rem; height: 32px;'>
-            <a href='#' style='text-decoration: none; color: rgba(49, 45, 43, 0.80); font-size: 0.875rem; font-weight: 500;'>Products</a>
-            <a href='#' style='text-decoration: none; color: rgba(49, 45, 43, 0.80); font-size: 0.875rem; font-weight: 500;'>Pricing</a>
-            <a href='#' style='text-decoration: none; color: rgba(49, 45, 43, 0.80); font-size: 0.875rem; font-weight: 500;'>Docs</a>
+            <a href='#benefit' style='text-decoration: none; color: rgba(49, 45, 43, 0.80); font-size: 0.875rem; font-weight: 500;'>Benefit</a>
+            <a href='#metrics' style='text-decoration: none; color: rgba(49, 45, 43, 0.80); font-size: 0.875rem; font-weight: 500;'>Metrics</a>
+            <a href='#faq' style='text-decoration: none; color: rgba(49, 45, 43, 0.80); font-size: 0.875rem; font-weight: 500;'>FaQ</a>
         </div>
         """, unsafe_allow_html=True)
     
     with col3:
-        st.button("Join", key="login_btn")
+        if st.button("Join", key="login_btn"):
+            st.session_state.current_page = 'upload'
+            st.rerun()
     
     st.markdown("</div>", unsafe_allow_html=True)
     st.markdown("<hr style='margin: 0.75rem 0 1.5rem 0;'>", unsafe_allow_html=True)
 
-
-
-# ============== HERO SECTION ==============
 def render_hero():
     st.markdown("<br>", unsafe_allow_html=True)
     
     st.markdown("""
     <h1 class="hero-title">
-        Effortless custom contract<br>billing by Brillance
+        AI-powered plant disease detection <br> by Deep Learning
     </h1>
     """, unsafe_allow_html=True)
     
     st.markdown("""
-    <p class="hero-subtitle">
-        Streamline your billing process with seamless automation
-        for every custom contract, tailored by Brillance.
+    <p class="hero-subtitle" id="benefit">
+       Upload a leaf photo and get instant health analysis powered by AI. 
+        Include a classification and a recommendation action.
     </p>
     """, unsafe_allow_html=True)
     
@@ -483,31 +503,25 @@ def render_hero():
             st.session_state.current_page = 'upload'
             st.rerun()
     
-    st.markdown("<br>", unsafe_allow_html=True)
-    
-    # Dashboard preview placeholder
-    # st.image("images/dsadsadsa.jpeg", 
-    #          caption="", use_container_width=True)
-    
+    st.markdown("<br>", unsafe_allow_html=True) 
     st.markdown("<hr>", unsafe_allow_html=True)
 
 
-# ============== FEATURE CARDS ==============
 def render_feature_cards():
     st.markdown("<br>", unsafe_allow_html=True)
     
     features = [
         {
-            "title": "Plan your schedules",
-            "description": "Streamline customer subscriptions and billing with automated scheduling tools."
+            "title": "Accurate Disease Detection",
+            "description": "Identify plant diseases with high precision using an AI model trained on thousands of real-world images."
         },
         {
-            "title": "Analytics & insights",
-            "description": "Transform your business data into actionable insights with real-time analytics."
+            "title": "Simple & Easy to Use",
+            "description": "Upload a photo of a leaf or fruit, and get instant diagnostic results — no expert knowledge required."
         },
         {
-            "title": "Collaborate seamlessly",
-            "description": "Keep your team aligned with shared dashboards and collaborative workflows."
+            "title": "Actionable Care Recommendations",
+            "description": "Receive suggested treatment steps to help prevent further crop damage and support healthy plant growth."
         }
     ]
     
@@ -523,20 +537,17 @@ def render_feature_cards():
     
     st.markdown("<hr>", unsafe_allow_html=True)
 
-
-# ============== SOCIAL PROOF ==============
 def render_social_proof():
     st.markdown("<br>", unsafe_allow_html=True)
     
-    st.markdown('<div style="text-align: center;"><span class="section-badge">Social Proof</span></div>', unsafe_allow_html=True)
-    st.markdown('<h2 class="section-title">Confidence backed by results</h2>', unsafe_allow_html=True)
-    st.markdown('<p class="section-description">Our customers achieve more each day because their tools are simple, powerful, and clear.</p>', unsafe_allow_html=True)
+    st.markdown('<div style="text-align: center;"><span class="section-badge">Supported Plant Classes</span></div>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-title">Plant classes we can accurately detect</h2>', unsafe_allow_html=True)
+    st.markdown('<p class="section-description">Our model is trained to recognize a wide variety of plant diseases and healthy conditions across multiple crop types.</p>', unsafe_allow_html=True)
     
     st.markdown("<br>", unsafe_allow_html=True)
     
-    # Logo cloud
     logo_cols = st.columns(4)
-    companies = ["Acme Corp", "TechFlow", "InnovateCo", "DataSync"]
+    companies = ["Apple – Apple Scab", "Apple – Black Rot", "Blueberry – Healthy", "Cherry – Powdery Mildew"]
     for i, company in enumerate(companies):
         with logo_cols[i]:
             st.markdown(f'<div class="logo-placeholder">{company}</div>', unsafe_allow_html=True)
@@ -544,23 +555,21 @@ def render_social_proof():
     st.markdown("<br>", unsafe_allow_html=True)
     
     logo_cols2 = st.columns(4)
-    companies2 = ["CloudBase", "Nexus AI", "Quantum", "Horizon"]
+    companies2 = ["Corn – Common Rust", "Grape – Black Rot", "Bell Pepper – Healthy", "And many more..."]
     for i, company in enumerate(companies2):
         with logo_cols2[i]:
             st.markdown(f'<div class="logo-placeholder">{company}</div>', unsafe_allow_html=True)
     
     st.markdown("<hr>", unsafe_allow_html=True)
 
-
-# ============== METRICS ==============
 def render_metrics():
     st.markdown("<br>", unsafe_allow_html=True)
     
     metrics = [
-        {"value": "99.9%", "label": "Uptime guaranteed"},
-        {"value": "50K+", "label": "Active users"},
-        {"value": "150+", "label": "Integrations"},
-        {"value": "24/7", "label": "Support available"}
+        {"value": "86%", "label": "Accuracy"},
+        {"value": "84%", "label": "Precision"},
+        {"value": "85%", "label": "Recall"},
+        {"value": "83%", "label": "F1 Score"}
     ]
     
     cols = st.columns(4)
@@ -575,166 +584,6 @@ def render_metrics():
     
     st.markdown("<hr>", unsafe_allow_html=True)
 
-
-# ============== TESTIMONIALS ==============
-# def render_testimonials():
-#     st.markdown("<br>", unsafe_allow_html=True)
-    
-#     testimonials = [
-#         {
-#             "quote": "In just a few minutes, we transformed our data into actionable insights. The process was seamless and incredibly efficient!",
-#             "name": "Jamie Marshall",
-#             "company": "Co-founder, Exponent",
-#             "image": "images/chatgpt-20image-20sep-2011-2c-202025-2c-2011-35-19-20am.png"
-#         },
-#         {
-#             "quote": "Brillance has revolutionized how we handle custom contracts. The automation saves us hours every week and eliminates errors completely.",
-#             "name": "Sarah Chen",
-#             "company": "VP Operations, TechFlow",
-#             "image": "images/chatgpt-20image-20sep-2011-2c-202025-2c-2010-54-18-20am.png"
-#         },
-#         {
-#             "quote": "The billing automation is a game-changer. What used to take our team days now happens automatically with perfect accuracy.",
-#             "name": "Marcus Rodriguez",
-#             "company": "Finance Director, InnovateCorp",
-#             "image": "images/chatgpt-20image-20sep-2011-2c-202025-2c-2011-01-05-20am.png"
-#         }
-#     ]
-    
-#     # Use session state to track active testimonial
-#     if 'active_testimonial' not in st.session_state:
-#         st.session_state.active_testimonial = 0
-    
-#     testimonial = testimonials[st.session_state.active_testimonial]
-    
-#     col1, col2 = st.columns([1, 2])
-    
-#     with col1:
-#         st.image(testimonial["image"], width=200)
-    
-#     with col2:
-#         st.markdown(f'<p class="testimonial-quote">"{testimonial["quote"]}"</p>', unsafe_allow_html=True)
-#         st.markdown(f'<p class="testimonial-author">{testimonial["name"]}</p>', unsafe_allow_html=True)
-#         st.markdown(f'<p class="testimonial-company">{testimonial["company"]}</p>', unsafe_allow_html=True)
-    
-#     # Navigation buttons
-#     nav_col1, nav_col2, nav_col3 = st.columns([2, 1, 2])
-#     with nav_col2:
-#         btn_cols = st.columns(2)
-#         with btn_cols[0]:
-#             if st.button("←", key="prev_testimonial"):
-#                 st.session_state.active_testimonial = (st.session_state.active_testimonial - 1) % len(testimonials)
-#                 st.rerun()
-#         with btn_cols[1]:
-#             if st.button("→", key="next_testimonial"):
-#                 st.session_state.active_testimonial = (st.session_state.active_testimonial + 1) % len(testimonials)
-#                 st.rerun()
-    
-#     st.markdown("<hr>", unsafe_allow_html=True)
-
-
-# ============== PRICING ==============
-# def render_pricing():
-#     st.markdown("<br>", unsafe_allow_html=True)
-    
-#     st.markdown('<div style="text-align: center;"><span class="section-badge">Plans & Pricing</span></div>', unsafe_allow_html=True)
-#     st.markdown('<h2 class="section-title">Choose the perfect plan for your business</h2>', unsafe_allow_html=True)
-#     st.markdown('<p class="section-description">Scale your operations with flexible pricing that grows with your team. Start free, upgrade when you\'re ready.</p>', unsafe_allow_html=True)
-    
-#     st.markdown("<br>", unsafe_allow_html=True)
-    
-#     # Billing toggle
-#     billing_col1, billing_col2, billing_col3 = st.columns([1, 1, 1])
-#     with billing_col2:
-#         billing_period = st.radio(
-#             "Billing Period",
-#             ["Annually", "Monthly"],
-#             horizontal=True,
-#             label_visibility="collapsed"
-#         )
-    
-#     is_annual = billing_period == "Annually"
-    
-#     st.markdown("<br>", unsafe_allow_html=True)
-    
-#     pricing_data = {
-#         "starter": {"monthly": 0, "annually": 0},
-#         "professional": {"monthly": 20, "annually": 16},
-#         "enterprise": {"monthly": 200, "annually": 160}
-#     }
-    
-#     col1, col2, col3 = st.columns(3)
-    
-#     # Starter Plan
-#     with col1:
-#         price = pricing_data["starter"]["annually" if is_annual else "monthly"]
-#         st.markdown(f"""
-#         <div class="pricing-card">
-#             <h3>Starter</h3>
-#             <p style="color: rgba(41, 37, 35, 0.70); font-size: 0.875rem;">Perfect for individuals and small teams getting started.</p>
-#             <div class="price">${price}</div>
-#             <p style="color: #847971; font-size: 0.875rem;">per {'year' if is_annual else 'month'}, per user.</p>
-#             <ul class="features">
-#                 <li>✓ Up to 3 projects</li>
-#                 <li>✓ Basic documentation tools</li>
-#                 <li>✓ Community support</li>
-#                 <li>✓ Standard templates</li>
-#                 <li>✓ Basic analytics</li>
-#             </ul>
-#         </div>
-#         """, unsafe_allow_html=True)
-#         st.button("Start for free", key="starter_btn", use_container_width=True)
-    
-#     # Professional Plan
-#     with col2:
-#         price = pricing_data["professional"]["annually" if is_annual else "monthly"]
-#         st.markdown(f"""
-#         <div class="pricing-card featured">
-#             <h3>Professional</h3>
-#             <p style="color: #B2AEA9; font-size: 0.875rem;">Advanced features for growing teams and businesses.</p>
-#             <div class="price">${price}</div>
-#             <p style="color: #D2C6BF; font-size: 0.875rem;">per {'year' if is_annual else 'month'}, per user.</p>
-#             <ul class="features">
-#                 <li>✓ Unlimited projects</li>
-#                 <li>✓ Advanced documentation tools</li>
-#                 <li>✓ Priority support</li>
-#                 <li>✓ Custom templates</li>
-#                 <li>✓ Advanced analytics</li>
-#                 <li>✓ Team collaboration</li>
-#                 <li>✓ API access</li>
-#                 <li>✓ Custom integrations</li>
-#             </ul>
-#         </div>
-#         """, unsafe_allow_html=True)
-#         st.button("Get started", key="pro_btn", use_container_width=True)
-    
-#     # Enterprise Plan
-#     with col3:
-#         price = pricing_data["enterprise"]["annually" if is_annual else "monthly"]
-#         st.markdown(f"""
-#         <div class="pricing-card">
-#             <h3>Enterprise</h3>
-#             <p style="color: rgba(41, 37, 35, 0.70); font-size: 0.875rem;">Complete solution for large organizations and enterprises.</p>
-#             <div class="price">${price}</div>
-#             <p style="color: #847971; font-size: 0.875rem;">per {'year' if is_annual else 'month'}, per user.</p>
-#             <ul class="features">
-#                 <li>✓ Everything in Professional</li>
-#                 <li>✓ Dedicated account manager</li>
-#                 <li>✓ 24/7 phone support</li>
-#                 <li>✓ Custom onboarding</li>
-#                 <li>✓ Advanced security features</li>
-#                 <li>✓ SSO integration</li>
-#                 <li>✓ Custom contracts</li>
-#                 <li>✓ White-label options</li>
-#             </ul>
-#         </div>
-#         """, unsafe_allow_html=True)
-#         st.button("Contact sales", key="enterprise_btn", use_container_width=True)
-    
-#     st.markdown("<hr>", unsafe_allow_html=True)
-
-
-# ============== FAQ ==============
 def render_faq():
     st.markdown("<br>", unsafe_allow_html=True)
     
@@ -747,28 +596,28 @@ def render_faq():
     with col2:
         faq_data = [
             {
-                "question": "What is Brillance and who is it for?",
-                "answer": "Brillance is a comprehensive billing automation platform designed for businesses that need custom contract management. It's perfect for SaaS companies, service providers, and enterprises looking to streamline their billing processes."
+                "question": "What is this application and who is it for?",
+                "answer": "This app is a plant disease detection tool designed for farmers, gardeners, researchers, and anyone who wants quick insights into plant health. Simply upload a leaf image, and the system will identify the disease and provide recommendations."
             },
             {
-                "question": "How does the custom contract billing work?",
-                "answer": "Our platform automatically processes your custom contracts, calculates billing amounts based on your specific terms, and generates invoices. You can set up complex pricing structures, usage-based billing, and custom billing cycles."
+                "question": "How does the plant disease classification work?",
+                "answer": "Our model analyzes the uploaded leaf image using a deep learning classifier trained on thousands of plant disease samples. It then predicts the most likely class and provides a confidence score for transparency."
             },
             {
-                "question": "Can I integrate Brillance with my existing tools?",
-                "answer": "Yes! Brillance integrates seamlessly with popular CRM systems, accounting software, and payment processors. We support APIs and webhooks for custom integrations with your existing workflow."
+                "question": "What is the confidence score shown in the results?",
+                "answer": "The confidence score represents how certain the model is about its prediction. Higher scores indicate stronger confidence in the detected disease or healthy condition."
             },
             {
-                "question": "What kind of support do you provide?",
-                "answer": "We offer 24/7 customer support, dedicated account managers for enterprise clients, comprehensive documentation, and onboarding assistance to help you get started quickly."
+                "question": "What kind of recommendations will I receive?",
+                "answer": "After classification, the app uses Google Gemini to generate personalized suggestions—such as treatment steps, prevention tips, and care recommendations—based on the detected disease."
             },
             {
-                "question": "Is my data secure with Brillance?",
-                "answer": "Absolutely. We use enterprise-grade security measures including end-to-end encryption, SOC 2 compliance, and regular security audits. Your data is stored in secure, redundant data centers."
+                "question": "Which plant types does the system support?",
+                "answer": "Our model supports over 30 classes, including diseases from apples, tomatoes, grapes, potatoes, peppers, citrus plants, and more. You can view the full list on the “Supported Classes” section."
             },
             {
-                "question": "How do I get started with Brillance?",
-                "answer": "Getting started is simple! Sign up for our free trial, connect your existing systems, and our onboarding team will help you set up your first custom billing workflow within 24 hours."
+                "question": "Is my uploaded image stored anywhere?",
+                "answer": "No. Images are processed securely and are not stored on our servers. Your data remains private and is only used to generate your classification result."
             }
         ]
         
@@ -778,18 +627,14 @@ def render_faq():
     
     st.markdown("<hr>", unsafe_allow_html=True)
 
-
-# ============== CTA SECTION ==============
 def render_cta():
-    # st.markdown("<br>", unsafe_allow_html=True)
-    
     st.markdown("""
     <div style="text-align: center; padding: 3rem 0;">
         <h2 style="font-size: 2.5rem; font-weight: 600; color: #49423D; margin-bottom: 1rem; letter-spacing: -0.02em;">
-            Ready to transform your billing?
+            Ready to improve your plant health diagnostics?
         </h2>
         <p style="color: #605A57; font-size: 1.1rem; max-width: 500px; margin: 0 auto 2rem auto;">
-            Join thousands of businesses that trust Brillance for their custom contract billing needs.
+            Join thousands of growers, researchers, and plant enthusiasts who rely on our AI-powered system to identify diseases quickly and accurately.
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -800,11 +645,9 @@ def render_cta():
             st.session_state.current_page = 'upload'
             st.rerun()
     
-    # st.markdown("<br>", unsafe_allow_html=True)
     st.markdown("<hr>", unsafe_allow_html=True)
 
 
-# ============== FOOTER ==============
 def render_footer():
     st.markdown("""
     <div style='text-align: center; padding: 1.5rem 0; color: #605A57; font-size: 0.875rem;'>
@@ -813,16 +656,13 @@ def render_footer():
     """, unsafe_allow_html=True)
 
 
-# ============== UPLOAD & PREDICTION PAGE ==============
 def render_upload_page():
-    # Back button
     if st.button("← Back to Home", key="back_btn"):
         st.session_state.current_page = 'landing'
         st.rerun()
     
     st.markdown("<br>", unsafe_allow_html=True)
     
-    # Header section
     st.markdown("""
     <div style="text-align: center; margin-bottom: 2rem;">
         <span class="section-badge">AI Analysis</span>
@@ -834,7 +674,6 @@ def render_upload_page():
     </div>
     """, unsafe_allow_html=True)
     
-    # Main content
     col1, col2 = st.columns([1, 1], gap="large")
     
     with col1:
@@ -861,7 +700,6 @@ def render_upload_page():
             
             st.markdown("<br>", unsafe_allow_html=True)
             
-            # Guidelines
             st.markdown("""
             <div style="background: #F7F5F3; border: 1px solid #E0DEDB; border-radius: 8px; padding: 1rem;">
                 <h4 style="font-size: 0.875rem; font-weight: 600; color: #49423D; margin-bottom: 0.75rem;">
@@ -879,39 +717,56 @@ def render_upload_page():
             st.markdown("<br>", unsafe_allow_html=True)
             
             if st.button("Analyze Image", key="analyze_btn", use_container_width=True):
-                with st.spinner("Analyzing your image..."):
-                    # TODO: Add actual model prediction here
-                    import time
-                    time.sleep(2)
-                    
-                    # Store results in session state
-                    st.session_state.prediction_result = {
-                        "disease": "Apple Scab",
-                        "confidence": 94.5,
-                        "severity": "Moderate",
-                        "recommendation": """Based on the analysis, your plant shows signs of Apple Scab, a fungal disease. Here are the recommended steps:
-
-**Immediate Actions:**
-• Remove and destroy all infected leaves to prevent spread
-• Improve air circulation around the plant by pruning dense foliage
-• Avoid overhead watering; water at the base of the plant instead
-
-**Treatment Plan:**
-• Apply a fungicide containing captan or mancozeb every 7-10 days
-• Continue treatment for 3-4 weeks or until symptoms improve
-• Ensure proper spacing between plants for better air flow
-
-**Prevention:**
-• Remove fallen leaves and debris regularly
-• Apply preventive fungicide spray in early spring
-• Choose disease-resistant varieties for future plantings
-• Maintain consistent watering schedule
-
-**When to Seek Expert Help:**
-If the condition worsens despite treatment or spreads to other plants, consult a local agricultural extension office or plant pathologist for specialized assistance."""
+                loading_placeholder = st.empty()
+                with loading_placeholder.container():
+                    st.markdown("""
+                    <div style="text-align: center; padding: 2rem; background: #F7F5F3; border-radius: 12px; border: 1px solid #E0DEDB; margin-bottom: 16px;">
+                        <div style="margin-bottom: 1rem;">
+                            <div style="display: inline-block; width: 50px; height: 50px; border: 4px solid #E0DEDB; border-top: 4px solid #37322F; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                        </div>
+                        <h4 style="color: #49423D; font-size: 1rem; font-weight: 600; margin: 0;">Analyzing your image...</h4>
+                        <p style="color: #605A57; font-size: 0.875rem; margin-top: 0.5rem;">Please wait while our AI processes the image</p>
+                    </div>
+                    <style>
+                    @keyframes spin {
+                        0% { transform: rotate(0deg); }
+                        100% { transform: rotate(360deg); }
                     }
-                    st.session_state.analysis_complete = True
-                    st.rerun()
+                    </style>
+                    """, unsafe_allow_html=True)
+                
+                result = call_prediction_api(image)
+                
+                loading_placeholder.empty()
+                
+                predicted_class = result.get('prediction', 'Unknown')
+                confidence_str = result.get('confidence', '0.00%')
+                ai_recommendation = result.get('ai_recommendation', 'No recommendation available')
+                
+                try:
+                    confidence_value = float(confidence_str.replace('%', ''))
+                except:
+                    confidence_value = 0.0
+                
+                if "healthy" in predicted_class.lower():
+                    severity = "Healthy"
+                elif confidence_value >= 85:
+                    severity = "High Confidence"
+                elif confidence_value >= 70:
+                    severity = "Moderate Confidence"
+                else:
+                    severity = "Low Confidence"
+                
+                disease_display = predicted_class.replace('___', ' - ').replace('_', ' ')
+                
+                st.session_state.prediction_result = {
+                    "disease": disease_display,
+                    "confidence": confidence_value,
+                    "severity": severity,
+                    "recommendation": ai_recommendation
+                }
+                st.session_state.analysis_complete = True
+                st.rerun()
     
     with col2:
         if st.session_state.get('analysis_complete', False):
@@ -925,7 +780,6 @@ If the condition worsens despite treatment or spreads to other plants, consult a
             </div>
             """, unsafe_allow_html=True)
             
-            # Classification Result
             st.markdown(f"""
             <div class="classification-box">
                 <div class="classification-label">Disease Detected</div>
@@ -946,7 +800,6 @@ If the condition worsens despite treatment or spreads to other plants, consult a
             </div>
             """, unsafe_allow_html=True)
             
-            # Recommendations
             st.markdown(f"""
             <div class="recommendation-box">
                 <div class="recommendation-title">Treatment Recommendations</div>
@@ -955,8 +808,7 @@ If the condition worsens despite treatment or spreads to other plants, consult a
             """, unsafe_allow_html=True)
             
             st.markdown("<br>", unsafe_allow_html=True)
-            
-            # Action buttons
+
             btn_col1, btn_col2 = st.columns(2)
             with btn_col1:
                 if st.button("Analyze Another Image", key="reset_btn", use_container_width=True):
@@ -989,17 +841,16 @@ If the condition worsens despite treatment or spreads to other plants, consult a
             <div class="recommendation-box" style="margin-top: 1.5rem;">
                 <div class="recommendation-title">Why Choose Our AI?</div>
                 <ul style="font-size: 0.875rem; color: #605A57; line-height: 1.8; margin: 0; padding-left: 1.25rem;">
-                    <li>95%+ accuracy rate on disease detection</li>
-                    <li>Instant analysis in under 3 seconds</li>
+                    <li>85%+ accuracy rate on disease detection</li>
+                    <li>Instant analysis in under seconds</li>
                     <li>AI-powered treatment recommendations</li>
                     <li>Trained on thousands of plant disease images</li>
-                    <li>Regular model updates for improved accuracy</li>
+                    <li>Using modern deep learning techinque</li>
                 </ul>
             </div>
             """, unsafe_allow_html=True)
 
 
-# ============== MAIN APP ==============
 def main():
     if st.session_state.current_page == 'landing':
         render_header()
@@ -1007,14 +858,11 @@ def main():
         render_feature_cards()
         render_social_proof()
         render_metrics()
-        # render_testimonials()
-        # render_pricing()
         render_faq()
         render_cta()
         render_footer()
     elif st.session_state.current_page == 'upload':
         render_upload_page()
-
 
 if __name__ == "__main__":
     main()
