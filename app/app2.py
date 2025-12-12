@@ -36,6 +36,12 @@ st.markdown("""
         background-color: #F7F5F3;
     }
     
+    /* Remove default padding from main container */
+    .block-container {
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
+    }
+    
     /* Hero section styling */
     .hero-title {
         font-family: 'Georgia', serif;
@@ -180,13 +186,22 @@ st.markdown("""
     .faq-question {
         font-size: 1rem;
         font-weight: 500;
-        color: #49423D;
+        color: #000000;
     }
     
     .faq-answer {
         font-size: 0.875rem;
-        color: #605A57;
+        color: #000000;
         line-height: 1.6;
+    }
+    
+    /* FAQ expander text color */
+    div[data-testid="stExpander"] summary {
+        color: #000000 !important;
+    }
+    
+    div[data-testid="stExpander"] p {
+        color: #000000 !important;
     }
     
     /* Footer styling */
@@ -391,26 +406,63 @@ st.markdown("""
 
 # ============== HEADER ==============
 def render_header():
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col1:
-        st.markdown("### Brillance")
-    with col2:
-        header_cols = st.columns(3)
-        with header_cols[0]:
-            st.markdown("<p style='text-align: center; color: rgba(49, 45, 43, 0.80); font-size: 0.875rem;'>Products</p>", unsafe_allow_html=True)
-        with header_cols[1]:
-            st.markdown("<p style='text-align: center; color: rgba(49, 45, 43, 0.80); font-size: 0.875rem;'>Pricing</p>", unsafe_allow_html=True)
-        with header_cols[2]:
-            st.markdown("<p style='text-align: center; color: rgba(49, 45, 43, 0.80); font-size: 0.875rem;'>Docs</p>", unsafe_allow_html=True)
-    with col3:
-        st.button("Log in", key="login_btn")
+    # Custom CSS for login button alignment
+    st.markdown("""
+    <style>
+    /* Header button alignment */
+    div[data-testid="column"]:nth-of-type(3) {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: 2rem !important;
+    }
+    div[data-testid="column"]:nth-of-type(3) > div {
+        display: flex;
+        align-items: center;
+    }
+    div[data-testid="column"]:nth-of-type(3) .stButton {
+        margin: 0 !important;
+        margin-left: auto !important;
+    }
+    div[data-testid="column"]:nth-of-type(3) .stButton > button {
+        padding: 0.5rem 1.5rem !important;
+        font-size: 0.875rem !important;
+        margin: 0 !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
     
-    st.markdown("<hr>", unsafe_allow_html=True)
+    st.markdown("<div style=''>", unsafe_allow_html=True)
+    
+    col1, col2, col3 = st.columns([0.7, 3, 0.7])
+    
+    with col1:
+        st.markdown("""
+        <div style='display: flex; align-items: center; height: 32px;'>
+            <span style='font-size: 30px; font-weight: 900; color: #49423D;'>NatVision</span>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("""
+        <div style='display: flex; justify-content: center; align-items: center; gap: 2.5rem; height: 32px;'>
+            <a href='#' style='text-decoration: none; color: rgba(49, 45, 43, 0.80); font-size: 0.875rem; font-weight: 500;'>Products</a>
+            <a href='#' style='text-decoration: none; color: rgba(49, 45, 43, 0.80); font-size: 0.875rem; font-weight: 500;'>Pricing</a>
+            <a href='#' style='text-decoration: none; color: rgba(49, 45, 43, 0.80); font-size: 0.875rem; font-weight: 500;'>Docs</a>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col3:
+        st.button("Join", key="login_btn")
+    
+    st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("<hr style='margin: 0.75rem 0 1.5rem 0;'>", unsafe_allow_html=True)
+
 
 
 # ============== HERO SECTION ==============
 def render_hero():
-    st.markdown("<br><br>", unsafe_allow_html=True)
+    st.markdown("<br>", unsafe_allow_html=True)
     
     st.markdown("""
     <h1 class="hero-title">
@@ -434,8 +486,8 @@ def render_hero():
     st.markdown("<br>", unsafe_allow_html=True)
     
     # Dashboard preview placeholder
-    st.image("images/dsadsadsa.jpeg", 
-             caption="", use_container_width=True)
+    # st.image("images/dsadsadsa.jpeg", 
+    #          caption="", use_container_width=True)
     
     st.markdown("<hr>", unsafe_allow_html=True)
 
@@ -525,161 +577,161 @@ def render_metrics():
 
 
 # ============== TESTIMONIALS ==============
-def render_testimonials():
-    st.markdown("<br>", unsafe_allow_html=True)
+# def render_testimonials():
+#     st.markdown("<br>", unsafe_allow_html=True)
     
-    testimonials = [
-        {
-            "quote": "In just a few minutes, we transformed our data into actionable insights. The process was seamless and incredibly efficient!",
-            "name": "Jamie Marshall",
-            "company": "Co-founder, Exponent",
-            "image": "images/chatgpt-20image-20sep-2011-2c-202025-2c-2011-35-19-20am.png"
-        },
-        {
-            "quote": "Brillance has revolutionized how we handle custom contracts. The automation saves us hours every week and eliminates errors completely.",
-            "name": "Sarah Chen",
-            "company": "VP Operations, TechFlow",
-            "image": "images/chatgpt-20image-20sep-2011-2c-202025-2c-2010-54-18-20am.png"
-        },
-        {
-            "quote": "The billing automation is a game-changer. What used to take our team days now happens automatically with perfect accuracy.",
-            "name": "Marcus Rodriguez",
-            "company": "Finance Director, InnovateCorp",
-            "image": "images/chatgpt-20image-20sep-2011-2c-202025-2c-2011-01-05-20am.png"
-        }
-    ]
+#     testimonials = [
+#         {
+#             "quote": "In just a few minutes, we transformed our data into actionable insights. The process was seamless and incredibly efficient!",
+#             "name": "Jamie Marshall",
+#             "company": "Co-founder, Exponent",
+#             "image": "images/chatgpt-20image-20sep-2011-2c-202025-2c-2011-35-19-20am.png"
+#         },
+#         {
+#             "quote": "Brillance has revolutionized how we handle custom contracts. The automation saves us hours every week and eliminates errors completely.",
+#             "name": "Sarah Chen",
+#             "company": "VP Operations, TechFlow",
+#             "image": "images/chatgpt-20image-20sep-2011-2c-202025-2c-2010-54-18-20am.png"
+#         },
+#         {
+#             "quote": "The billing automation is a game-changer. What used to take our team days now happens automatically with perfect accuracy.",
+#             "name": "Marcus Rodriguez",
+#             "company": "Finance Director, InnovateCorp",
+#             "image": "images/chatgpt-20image-20sep-2011-2c-202025-2c-2011-01-05-20am.png"
+#         }
+#     ]
     
-    # Use session state to track active testimonial
-    if 'active_testimonial' not in st.session_state:
-        st.session_state.active_testimonial = 0
+#     # Use session state to track active testimonial
+#     if 'active_testimonial' not in st.session_state:
+#         st.session_state.active_testimonial = 0
     
-    testimonial = testimonials[st.session_state.active_testimonial]
+#     testimonial = testimonials[st.session_state.active_testimonial]
     
-    col1, col2 = st.columns([1, 2])
+#     col1, col2 = st.columns([1, 2])
     
-    with col1:
-        st.image(testimonial["image"], width=200)
+#     with col1:
+#         st.image(testimonial["image"], width=200)
     
-    with col2:
-        st.markdown(f'<p class="testimonial-quote">"{testimonial["quote"]}"</p>', unsafe_allow_html=True)
-        st.markdown(f'<p class="testimonial-author">{testimonial["name"]}</p>', unsafe_allow_html=True)
-        st.markdown(f'<p class="testimonial-company">{testimonial["company"]}</p>', unsafe_allow_html=True)
+#     with col2:
+#         st.markdown(f'<p class="testimonial-quote">"{testimonial["quote"]}"</p>', unsafe_allow_html=True)
+#         st.markdown(f'<p class="testimonial-author">{testimonial["name"]}</p>', unsafe_allow_html=True)
+#         st.markdown(f'<p class="testimonial-company">{testimonial["company"]}</p>', unsafe_allow_html=True)
     
-    # Navigation buttons
-    nav_col1, nav_col2, nav_col3 = st.columns([2, 1, 2])
-    with nav_col2:
-        btn_cols = st.columns(2)
-        with btn_cols[0]:
-            if st.button("←", key="prev_testimonial"):
-                st.session_state.active_testimonial = (st.session_state.active_testimonial - 1) % len(testimonials)
-                st.rerun()
-        with btn_cols[1]:
-            if st.button("→", key="next_testimonial"):
-                st.session_state.active_testimonial = (st.session_state.active_testimonial + 1) % len(testimonials)
-                st.rerun()
+#     # Navigation buttons
+#     nav_col1, nav_col2, nav_col3 = st.columns([2, 1, 2])
+#     with nav_col2:
+#         btn_cols = st.columns(2)
+#         with btn_cols[0]:
+#             if st.button("←", key="prev_testimonial"):
+#                 st.session_state.active_testimonial = (st.session_state.active_testimonial - 1) % len(testimonials)
+#                 st.rerun()
+#         with btn_cols[1]:
+#             if st.button("→", key="next_testimonial"):
+#                 st.session_state.active_testimonial = (st.session_state.active_testimonial + 1) % len(testimonials)
+#                 st.rerun()
     
-    st.markdown("<hr>", unsafe_allow_html=True)
+#     st.markdown("<hr>", unsafe_allow_html=True)
 
 
 # ============== PRICING ==============
-def render_pricing():
-    st.markdown("<br>", unsafe_allow_html=True)
+# def render_pricing():
+#     st.markdown("<br>", unsafe_allow_html=True)
     
-    st.markdown('<div style="text-align: center;"><span class="section-badge">Plans & Pricing</span></div>', unsafe_allow_html=True)
-    st.markdown('<h2 class="section-title">Choose the perfect plan for your business</h2>', unsafe_allow_html=True)
-    st.markdown('<p class="section-description">Scale your operations with flexible pricing that grows with your team. Start free, upgrade when you\'re ready.</p>', unsafe_allow_html=True)
+#     st.markdown('<div style="text-align: center;"><span class="section-badge">Plans & Pricing</span></div>', unsafe_allow_html=True)
+#     st.markdown('<h2 class="section-title">Choose the perfect plan for your business</h2>', unsafe_allow_html=True)
+#     st.markdown('<p class="section-description">Scale your operations with flexible pricing that grows with your team. Start free, upgrade when you\'re ready.</p>', unsafe_allow_html=True)
     
-    st.markdown("<br>", unsafe_allow_html=True)
+#     st.markdown("<br>", unsafe_allow_html=True)
     
-    # Billing toggle
-    billing_col1, billing_col2, billing_col3 = st.columns([1, 1, 1])
-    with billing_col2:
-        billing_period = st.radio(
-            "Billing Period",
-            ["Annually", "Monthly"],
-            horizontal=True,
-            label_visibility="collapsed"
-        )
+#     # Billing toggle
+#     billing_col1, billing_col2, billing_col3 = st.columns([1, 1, 1])
+#     with billing_col2:
+#         billing_period = st.radio(
+#             "Billing Period",
+#             ["Annually", "Monthly"],
+#             horizontal=True,
+#             label_visibility="collapsed"
+#         )
     
-    is_annual = billing_period == "Annually"
+#     is_annual = billing_period == "Annually"
     
-    st.markdown("<br>", unsafe_allow_html=True)
+#     st.markdown("<br>", unsafe_allow_html=True)
     
-    pricing_data = {
-        "starter": {"monthly": 0, "annually": 0},
-        "professional": {"monthly": 20, "annually": 16},
-        "enterprise": {"monthly": 200, "annually": 160}
-    }
+#     pricing_data = {
+#         "starter": {"monthly": 0, "annually": 0},
+#         "professional": {"monthly": 20, "annually": 16},
+#         "enterprise": {"monthly": 200, "annually": 160}
+#     }
     
-    col1, col2, col3 = st.columns(3)
+#     col1, col2, col3 = st.columns(3)
     
-    # Starter Plan
-    with col1:
-        price = pricing_data["starter"]["annually" if is_annual else "monthly"]
-        st.markdown(f"""
-        <div class="pricing-card">
-            <h3>Starter</h3>
-            <p style="color: rgba(41, 37, 35, 0.70); font-size: 0.875rem;">Perfect for individuals and small teams getting started.</p>
-            <div class="price">${price}</div>
-            <p style="color: #847971; font-size: 0.875rem;">per {'year' if is_annual else 'month'}, per user.</p>
-            <ul class="features">
-                <li>✓ Up to 3 projects</li>
-                <li>✓ Basic documentation tools</li>
-                <li>✓ Community support</li>
-                <li>✓ Standard templates</li>
-                <li>✓ Basic analytics</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
-        st.button("Start for free", key="starter_btn", use_container_width=True)
+#     # Starter Plan
+#     with col1:
+#         price = pricing_data["starter"]["annually" if is_annual else "monthly"]
+#         st.markdown(f"""
+#         <div class="pricing-card">
+#             <h3>Starter</h3>
+#             <p style="color: rgba(41, 37, 35, 0.70); font-size: 0.875rem;">Perfect for individuals and small teams getting started.</p>
+#             <div class="price">${price}</div>
+#             <p style="color: #847971; font-size: 0.875rem;">per {'year' if is_annual else 'month'}, per user.</p>
+#             <ul class="features">
+#                 <li>✓ Up to 3 projects</li>
+#                 <li>✓ Basic documentation tools</li>
+#                 <li>✓ Community support</li>
+#                 <li>✓ Standard templates</li>
+#                 <li>✓ Basic analytics</li>
+#             </ul>
+#         </div>
+#         """, unsafe_allow_html=True)
+#         st.button("Start for free", key="starter_btn", use_container_width=True)
     
-    # Professional Plan
-    with col2:
-        price = pricing_data["professional"]["annually" if is_annual else "monthly"]
-        st.markdown(f"""
-        <div class="pricing-card featured">
-            <h3>Professional</h3>
-            <p style="color: #B2AEA9; font-size: 0.875rem;">Advanced features for growing teams and businesses.</p>
-            <div class="price">${price}</div>
-            <p style="color: #D2C6BF; font-size: 0.875rem;">per {'year' if is_annual else 'month'}, per user.</p>
-            <ul class="features">
-                <li>✓ Unlimited projects</li>
-                <li>✓ Advanced documentation tools</li>
-                <li>✓ Priority support</li>
-                <li>✓ Custom templates</li>
-                <li>✓ Advanced analytics</li>
-                <li>✓ Team collaboration</li>
-                <li>✓ API access</li>
-                <li>✓ Custom integrations</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
-        st.button("Get started", key="pro_btn", use_container_width=True)
+#     # Professional Plan
+#     with col2:
+#         price = pricing_data["professional"]["annually" if is_annual else "monthly"]
+#         st.markdown(f"""
+#         <div class="pricing-card featured">
+#             <h3>Professional</h3>
+#             <p style="color: #B2AEA9; font-size: 0.875rem;">Advanced features for growing teams and businesses.</p>
+#             <div class="price">${price}</div>
+#             <p style="color: #D2C6BF; font-size: 0.875rem;">per {'year' if is_annual else 'month'}, per user.</p>
+#             <ul class="features">
+#                 <li>✓ Unlimited projects</li>
+#                 <li>✓ Advanced documentation tools</li>
+#                 <li>✓ Priority support</li>
+#                 <li>✓ Custom templates</li>
+#                 <li>✓ Advanced analytics</li>
+#                 <li>✓ Team collaboration</li>
+#                 <li>✓ API access</li>
+#                 <li>✓ Custom integrations</li>
+#             </ul>
+#         </div>
+#         """, unsafe_allow_html=True)
+#         st.button("Get started", key="pro_btn", use_container_width=True)
     
-    # Enterprise Plan
-    with col3:
-        price = pricing_data["enterprise"]["annually" if is_annual else "monthly"]
-        st.markdown(f"""
-        <div class="pricing-card">
-            <h3>Enterprise</h3>
-            <p style="color: rgba(41, 37, 35, 0.70); font-size: 0.875rem;">Complete solution for large organizations and enterprises.</p>
-            <div class="price">${price}</div>
-            <p style="color: #847971; font-size: 0.875rem;">per {'year' if is_annual else 'month'}, per user.</p>
-            <ul class="features">
-                <li>✓ Everything in Professional</li>
-                <li>✓ Dedicated account manager</li>
-                <li>✓ 24/7 phone support</li>
-                <li>✓ Custom onboarding</li>
-                <li>✓ Advanced security features</li>
-                <li>✓ SSO integration</li>
-                <li>✓ Custom contracts</li>
-                <li>✓ White-label options</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
-        st.button("Contact sales", key="enterprise_btn", use_container_width=True)
+#     # Enterprise Plan
+#     with col3:
+#         price = pricing_data["enterprise"]["annually" if is_annual else "monthly"]
+#         st.markdown(f"""
+#         <div class="pricing-card">
+#             <h3>Enterprise</h3>
+#             <p style="color: rgba(41, 37, 35, 0.70); font-size: 0.875rem;">Complete solution for large organizations and enterprises.</p>
+#             <div class="price">${price}</div>
+#             <p style="color: #847971; font-size: 0.875rem;">per {'year' if is_annual else 'month'}, per user.</p>
+#             <ul class="features">
+#                 <li>✓ Everything in Professional</li>
+#                 <li>✓ Dedicated account manager</li>
+#                 <li>✓ 24/7 phone support</li>
+#                 <li>✓ Custom onboarding</li>
+#                 <li>✓ Advanced security features</li>
+#                 <li>✓ SSO integration</li>
+#                 <li>✓ Custom contracts</li>
+#                 <li>✓ White-label options</li>
+#             </ul>
+#         </div>
+#         """, unsafe_allow_html=True)
+#         st.button("Contact sales", key="enterprise_btn", use_container_width=True)
     
-    st.markdown("<hr>", unsafe_allow_html=True)
+#     st.markdown("<hr>", unsafe_allow_html=True)
 
 
 # ============== FAQ ==============
@@ -729,7 +781,7 @@ def render_faq():
 
 # ============== CTA SECTION ==============
 def render_cta():
-    st.markdown("<br><br>", unsafe_allow_html=True)
+    # st.markdown("<br>", unsafe_allow_html=True)
     
     st.markdown("""
     <div style="text-align: center; padding: 3rem 0;">
@@ -748,43 +800,17 @@ def render_cta():
             st.session_state.current_page = 'upload'
             st.rerun()
     
-    st.markdown("<br><br>", unsafe_allow_html=True)
+    # st.markdown("<br>", unsafe_allow_html=True)
     st.markdown("<hr>", unsafe_allow_html=True)
 
 
 # ============== FOOTER ==============
 def render_footer():
-    st.markdown("<br>", unsafe_allow_html=True)
-    
-    col1, col2, col3, col4 = st.columns([1.5, 1, 1, 1])
-    
-    with col1:
-        st.markdown('<p class="footer-brand">Brillance</p>', unsafe_allow_html=True)
-        st.markdown('<p class="footer-tagline">Coding made effortless</p>', unsafe_allow_html=True)
-        st.markdown("""
-        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
-            <span style="color: #49423D;">𝕏</span>
-            <span style="color: #49423D;">in</span>
-            <span style="color: #49423D;">⌘</span>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col2:
-        st.markdown('<p class="footer-heading">Product</p>', unsafe_allow_html=True)
-        for link in ["Features", "Pricing", "Integrations", "Real-time Previews", "Multi-Agent Coding"]:
-            st.markdown(f'<a href="#" class="footer-link">{link}</a>', unsafe_allow_html=True)
-    
-    with col3:
-        st.markdown('<p class="footer-heading">Company</p>', unsafe_allow_html=True)
-        for link in ["About us", "Our team", "Careers", "Brand", "Contact"]:
-            st.markdown(f'<a href="#" class="footer-link">{link}</a>', unsafe_allow_html=True)
-    
-    with col4:
-        st.markdown('<p class="footer-heading">Resources</p>', unsafe_allow_html=True)
-        for link in ["Terms of use", "API Reference", "Documentation", "Community", "Support"]:
-            st.markdown(f'<a href="#" class="footer-link">{link}</a>', unsafe_allow_html=True)
-    
-    st.markdown("<br><br>", unsafe_allow_html=True)
+    st.markdown("""
+    <div style='text-align: center; padding: 1.5rem 0; color: #605A57; font-size: 0.875rem;'>
+        © 2025 NatVision. All rights reserved.
+    </div>
+    """, unsafe_allow_html=True)
 
 
 # ============== UPLOAD & PREDICTION PAGE ==============
@@ -981,8 +1007,8 @@ def main():
         render_feature_cards()
         render_social_proof()
         render_metrics()
-        render_testimonials()
-        render_pricing()
+        # render_testimonials()
+        # render_pricing()
         render_faq()
         render_cta()
         render_footer()
