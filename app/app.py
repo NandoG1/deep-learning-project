@@ -66,7 +66,7 @@ st.markdown("""
         font-family: 'Georgia', serif;
         font-size: 3.5rem;
         font-weight: 400;
-        color: #37322F;
+        color: #37322F !important;
         text-align: center;
         line-height: 1.2;
         margin-bottom: 1rem;
@@ -74,7 +74,7 @@ st.markdown("""
     
     .hero-subtitle {
         font-size: 1.1rem;
-        color: rgba(55, 50, 47, 0.80);
+        color: rgba(55, 50, 47, 0.80) !important;
         text-align: center;
         max-width: 500px;
         margin: 0 auto 2rem auto;
