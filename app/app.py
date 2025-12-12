@@ -466,9 +466,9 @@ st.markdown("""
     
     /* File uploader styling */
     [data-testid="stFileUploader"] {
-        background: #F7F5F3 !important;
+        background: white !important;
         border: 2px dashed #E0DEDB !important;
-        border-radius: 8px !important;
+        border-radius: 1px !important;
         padding: 2rem !important;
     }
     
@@ -935,7 +935,7 @@ def render_upload_page():
             """, unsafe_allow_html=True)
             
             st.markdown("""
-            <div class="recommendation-box" style="margin-top: 1.5rem;">
+            <div class="recommendation-box" style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
                 <div class="recommendation-title">Why Choose Our AI?</div>
                 <ul style="font-size: 0.875rem; color: #605A57; line-height: 1.8; margin: 0; padding-left: 1.25rem;">
                     <li>85%+ accuracy rate on disease detection</li>
